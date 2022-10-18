@@ -3,6 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
 	id 'java'
 	id 'jacoco'
+	id "org.sonarqube" version "3.4.0.2513"
 }
 
 group = 'br.inatel'
@@ -101,4 +102,12 @@ jacocoTestCoverageVerification {
 			}
 		}
 	}
+}
+
+sonarqube {
+  properties {
+    property "sonar.projectKey", "RedfoxGHS_This-is-Me-API"
+    property "sonar.organization", "redfoxghs"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
 }

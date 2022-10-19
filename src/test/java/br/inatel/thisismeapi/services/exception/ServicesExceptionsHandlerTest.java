@@ -25,19 +25,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
 @ActiveProfiles("dev")
-public class ServicesExceptionsHandlerTest {
+class ServicesExceptionsHandlerTest {
 
     private ServicesExceptionsHandler servicesExceptionsHandler;
 
     @Mock
     HttpServletRequest httpServletRequest;
 
-    public ServicesExceptionsHandlerTest() {
+    ServicesExceptionsHandlerTest() {
         servicesExceptionsHandler = new ServicesExceptionsHandler();
     }
 
     @Test
-    public void testUnregisteredUserException() {
+    void testUnregisteredUserException() {
         UnregisteredUserException unregisteredUserException = new UnregisteredUserException("msg");
 
         ResponseEntity<StandardError> responseEntity = servicesExceptionsHandler.unregisteredUserException(
@@ -51,7 +51,7 @@ public class ServicesExceptionsHandlerTest {
     }
 
     @Test
-    public void testTokenHandlerException() {
+    void testTokenHandlerException() {
 
         TokenExpiredException tokenHandler = new TokenExpiredException("msg");
         ResponseEntity<StandardError> responseEntity = servicesExceptionsHandler.tokenHandler(
@@ -65,7 +65,7 @@ public class ServicesExceptionsHandlerTest {
     }
 
     @Test
-    public void testNewInstanceOfTokenInvalidException() {
+    void testNewInstanceOfTokenInvalidException() {
 
         TokenInvalidException exception = new TokenInvalidException("msg");
 

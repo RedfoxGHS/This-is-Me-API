@@ -14,10 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
 @ActiveProfiles("dev")
-public class CharacterTests {
+class CharacterTests {
 
     @Test
-    public void testCreateANewInstance() {
+    void testCreateANewInstance() {
         Character character = new Character();
 
         assertNull(character.getId());
@@ -27,7 +27,7 @@ public class CharacterTests {
     }
 
     @Test
-    public void testUpLevel() {
+    void testUpLevel() {
         Character character = new Character();
         Character character2 = new Character();
 
@@ -40,7 +40,7 @@ public class CharacterTests {
     }
 
     @Test
-    public void testAddXp() {
+    void testAddXp() {
         Character character = new Character();
         Character character2 = new Character();
 

@@ -15,10 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
 @ActiveProfiles("dev")
-public class RolesTests {
+class RolesTests {
 
     @Test
-    public void testCreateANNewInstanceWithNullConstructor() {
+    void testCreateANNewInstanceWithNullConstructor() {
         Roles roles = new Roles();
 
         assertEquals(Roles.class, roles.getClass());
@@ -26,7 +26,7 @@ public class RolesTests {
     }
 
     @Test
-    public void testSetRoleName() {
+    void testSetRoleName() {
         Roles roles = new Roles();
         RoleName roleName = RoleName.ROLE_USER;
         roles.setRoleName(roleName);

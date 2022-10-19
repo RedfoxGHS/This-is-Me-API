@@ -17,10 +17,10 @@ import static org.junit.jupiter.api.Assertions.*;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
 @ActiveProfiles("dev")
-public class UserTests {
+class UserTests {
 
     @Test
-    public void testIfTwoUsersWithTheSameEmailIsTheSameUser() {
+    void testIfTwoUsersWithTheSameEmailIsTheSameUser() {
         String email = "test@email.com";
         User user1 = new User();
         user1.setEmail(email);
@@ -33,7 +33,7 @@ public class UserTests {
 
 
     @Test
-    public void testIfTwoUsersWithDifferentEmailIsNotTheSameUser() {
+    void testIfTwoUsersWithDifferentEmailIsNotTheSameUser() {
         String email = "test@email.com";
         User user1 = new User();
         user1.setEmail(email);
@@ -45,7 +45,7 @@ public class UserTests {
     }
 
     @Test
-    public void testIfIstheSameObjectUser() {
+    void testIfIstheSameObjectUser() {
         String email = "test@email.com";
         User user1 = new User();
         user1.setEmail(email);
@@ -56,7 +56,7 @@ public class UserTests {
     }
 
     @Test
-    public void testUserIsNotEqualNull() {
+    void testUserIsNotEqualNull() {
         String email = "test@email.com";
         User user1 = new User();
         user1.setEmail(email);
@@ -67,7 +67,7 @@ public class UserTests {
     }
 
     @Test
-    public void testUserIsNotEqualADifferentObject() {
+    void testUserIsNotEqualADifferentObject() {
         String email = "test@email.com";
         User user1 = new User();
         user1.setEmail(email);
@@ -81,14 +81,14 @@ public class UserTests {
     }
 
     @Test
-    public void testUserGetId() {
+    void testUserGetId() {
         User user1 = new User();
 
         assertNull(user1.getId());
     }
 
     @Test
-    public void testUserGetRoles() {
+    void testUserGetRoles() {
         User user = new User();
         List<Roles> roles = new ArrayList<>();
         roles.add(new Roles(RoleName.ROLE_USER));
@@ -102,7 +102,7 @@ public class UserTests {
     }
 
     @Test
-    public void testGetTokenResetPassword() {
+    void testGetTokenResetPassword() {
         User user = new User();
         user.setTokenResetPassword("123456");
 

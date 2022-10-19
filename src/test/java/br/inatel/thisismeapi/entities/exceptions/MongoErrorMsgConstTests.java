@@ -14,24 +14,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
 @ActiveProfiles("dev")
-public class MongoErrorMsgConstTests {
+class MongoErrorMsgConstTests {
 
     @Test
-    public void testNewInstanceOfMongoErrorMsgConstTest() {
+    void testNewInstanceOfMongoErrorMsgConstTest() {
         MongoErrorMsgConst mongoErrorMsgConst = new MongoErrorMsgConst();
 
         assertEquals(MongoErrorMsgConst.class, mongoErrorMsgConst.getClass());
     }
 
     @Test
-    public void testErrorE11000() {
+    void testErrorE11000() {
         String msg = MongoErrorMsgConst.getMsgByCode("E11000");
 
         assertEquals("Já Existe uma conta cadastrada com esse e-mail!", msg);
     }
 
     @Test
-    public void testUnknownError() {
+    void testUnknownError() {
         String code = "EUnknown123";
         String expected = "Erro " + code + " desconhecido!";
         String actual = MongoErrorMsgConst.getMsgByCode("EUnknown123");

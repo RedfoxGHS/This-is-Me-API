@@ -15,16 +15,16 @@ import java.util.List;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
 @ActiveProfiles("dev")
-public class QuestTest {
+class QuestTest {
 
     @Test
-    public void testCreateNewInstance(){
+    void testCreateNewInstance(){
         Quest actual = new Quest();
         Assertions.assertEquals(Quest.class, actual.getClass());
     }
 
     @Test
-    public void testQuestSetAttributes(){
+    void testQuestSetAttributes(){
         Quest actual = new Quest();
         actual.setName("quest");
         actual.setEmail("test@test.com");

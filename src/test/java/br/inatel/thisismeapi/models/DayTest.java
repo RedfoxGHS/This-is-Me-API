@@ -15,10 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
 @ActiveProfiles("dev")
-public class DayTest {
+class DayTest {
 
     @Test
-    public void testCreateNewInstance(){
+    void testCreateNewInstance(){
         Day day = new Day();
         day.setDayOfWeek(DayOfWeek.FRIDAY);
         day.setStartTime("10:00");
@@ -30,7 +30,7 @@ public class DayTest {
     }
 
     @Test
-    public void testGetInterval(){
+    void testGetInterval(){
         Day day = new Day();
         day.setDayOfWeek(DayOfWeek.FRIDAY);
         day.setStartTime("10:00");
@@ -40,7 +40,7 @@ public class DayTest {
     }
 
     @Test
-    public void testCalculateXp(){
+    void testCalculateXp(){
         Day day = new Day();
         day.setDayOfWeek(DayOfWeek.FRIDAY);
         day.setStartTime("10:00");

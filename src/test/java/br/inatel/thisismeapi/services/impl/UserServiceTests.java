@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
 @ContextConfiguration(classes = {UserServiceImpl.class})
 @ActiveProfiles("dev")
 @ExtendWith(MockitoExtension.class)
-public class UserServiceTests {
+class UserServiceTests {
 
     @Autowired
     private UserServiceImpl userService;
@@ -55,7 +55,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void testCreateNewAccountSuccess() {
+    void testCreateNewAccountSuccess() {
 
         // given
         String email = "test@email.com";
@@ -82,7 +82,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void testCreateNewAccountWithPasswordWithTheMaxNumberOfCharacters() {
+    void testCreateNewAccountWithPasswordWithTheMaxNumberOfCharacters() {
 
         String email = "test@email.com";
         String password = PasswordConst.PASSWORD_WITH_MORE_MAX_LENGHT_31;
@@ -97,7 +97,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void testCreateNewAccountWithPasswordWithLessThanMinNumberOfCharacters() {
+    void testCreateNewAccountWithPasswordWithLessThanMinNumberOfCharacters() {
 
         // given
         String email = "test@email.com";
@@ -115,7 +115,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void testFindCharacterByEmailSuccess() {
+    void testFindCharacterByEmailSuccess() {
 
         // given
         String email = "test@email.com";
@@ -138,7 +138,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void testFindCharacterByEmailWhenNotFoundAccount() {
+    void testFindCharacterByEmailWhenNotFoundAccount() {
 
         String email = "test@test.com";
 
@@ -156,7 +156,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void testResetPasswordWithLessCharactersPassword() {
+    void testResetPasswordWithLessCharactersPassword() {
 
         String pass = "123";
         String jwt = "jwt";
@@ -170,7 +170,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void testResetPasswordWithMoreCharactersPassword() {
+    void testResetPasswordWithMoreCharactersPassword() {
 
         String pass = "0123456789012345678901234567890123456789";
         String jwt = "jwt";
@@ -183,7 +183,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void testResetPasswordWithInvalidToken() {
+    void testResetPasswordWithInvalidToken() {
 
         String newPass = "123456";
         String jwt = JwtUtilToTest.generateTokenResetPassword("test@test.com", "12345", "invalid key", 120);
@@ -196,7 +196,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void testResetPasswordWithExpiredToken() {
+    void testResetPasswordWithExpiredToken() {
 
         String newPass = "123456";
         String jwt = JwtUtilToTest.generateTokenResetPassword("test@test.com", "123456", PRIVATE_KEY_MAIL, -120);
@@ -209,7 +209,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void testResetPasswordWithNonExistentUser() {
+    void testResetPasswordWithNonExistentUser() {
 
         String newPass = "123456";
         String email = "test@test.com";
@@ -225,7 +225,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void testResetPasswordWithTokenAlreadyUsed() {
+    void testResetPasswordWithTokenAlreadyUsed() {
 
         String newPass = "123456";
         String email = "test@test.com";
@@ -244,7 +244,7 @@ public class UserServiceTests {
     }
 
     @Test
-    public void testResetPasswordSuccess() {
+    void testResetPasswordSuccess() {
 
         String newPass = "123456";
         String oldPass = "654321";

@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
 @ContextConfiguration(classes = {MailServiceImpl.class})
 @ActiveProfiles("dev")
 @ExtendWith(MockitoExtension.class)
-public class MailServiceTests {
+class MailServiceTests {
 
     @Autowired
     private MailServiceImpl mailService;
@@ -50,7 +50,7 @@ public class MailServiceTests {
     private String PRIVATE_KEY_MAIL;
 
     @Test
-    public void testSendEmailForgotPasswordSuccess(){
+    void testSendEmailForgotPasswordSuccess(){
 
         String email = "test123@test.com";
 
@@ -66,7 +66,7 @@ public class MailServiceTests {
     }
 
     @Test
-    public void testSendEmailForgotPasswordWithNonExistentUser(){
+    void testSendEmailForgotPasswordWithNonExistentUser(){
 
         String email = "test@test.com";
 
@@ -80,7 +80,7 @@ public class MailServiceTests {
     }
 
     @Test
-    public void testVerifyNumberPasswordWithNonExistentUser(){
+    void testVerifyNumberPasswordWithNonExistentUser(){
 
         String email = "test@test.com";
 
@@ -94,7 +94,7 @@ public class MailServiceTests {
     }
 
     @Test
-    public void testVerifyNumberPasswordWithInvalidCode(){
+    void testVerifyNumberPasswordWithInvalidCode(){
 
         String email = "test123@test.com";
         User user = new User(email, "12345");
@@ -113,7 +113,7 @@ public class MailServiceTests {
     }
 
     @Test
-    public void testVerifyNumberPasswordWithExpiredToken(){
+    void testVerifyNumberPasswordWithExpiredToken(){
 
         String email = "test123@test.com";
         User user = new User(email, "12345");
@@ -132,7 +132,7 @@ public class MailServiceTests {
     }
 
     @Test
-    public void testVerifyNumberPasswordSuccess(){
+    void testVerifyNumberPasswordSuccess(){
 
         String email = "test123@test.com";
         User user = new User(email, "12345");

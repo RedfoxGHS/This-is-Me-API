@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(value = AdminController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
 @ActiveProfiles("dev")
-public class AdminControllerTests {
+class AdminControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -46,7 +46,7 @@ public class AdminControllerTests {
 
 
     @Test
-    public void testCreateNewAccountSuccess() throws Exception {
+    void testCreateNewAccountSuccess() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput(EmailConst.EMAIL_MAX_LENGHT_255, "12345");
         String verifyPassword = "12345";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -67,7 +67,7 @@ public class AdminControllerTests {
 
 
     @Test
-    public void testCreateNewAccountWithEmailInvalid() throws Exception {
+    void testCreateNewAccountWithEmailInvalid() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput("test@", "12345");
         String verifyPassword = "12345";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -87,7 +87,7 @@ public class AdminControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithEmailNull() throws Exception {
+    void testCreateNewAccountWithEmailNull() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput(null, "12345");
         String verifyPassword = "12345";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -107,7 +107,7 @@ public class AdminControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithEmailWithSpacesOnly() throws Exception {
+    void testCreateNewAccountWithEmailWithSpacesOnly() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput("    ", "12345");
         String verifyPassword = "12345";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -127,7 +127,7 @@ public class AdminControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithEmailWithMoreMaxCharacter() throws Exception {
+    void testCreateNewAccountWithEmailWithMoreMaxCharacter() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput(EmailConst.EMAIL_WITH_MORE_MAX_LENGHT_256, "12345");
         String verifyPassword = "12345";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -147,7 +147,7 @@ public class AdminControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithVerifyPasswordDifferent() throws Exception {
+    void testCreateNewAccountWithVerifyPasswordDifferent() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput("test@email.com", "12345");
         String verifyPassword = "123";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -167,7 +167,7 @@ public class AdminControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithPasswordWithLessThanMinNumberOfCharacters() throws Exception {
+    void testCreateNewAccountWithPasswordWithLessThanMinNumberOfCharacters() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput("test@email.com", PasswordConst.PASSWORD_WITH_LESS_MIN_LENGHT_4);
         String verifyPassword = PasswordConst.PASSWORD_WITH_LESS_MIN_LENGHT_4;
         CreateUserContext createUserContext = new CreateUserContext();
@@ -187,7 +187,7 @@ public class AdminControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithPasswordWithMoreThanMaxNumberOfCharacters() throws Exception {
+    void testCreateNewAccountWithPasswordWithMoreThanMaxNumberOfCharacters() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput("test@email.com", PasswordConst.PASSWORD_WITH_MORE_MAX_LENGHT_31);
         String verifyPassword = PasswordConst.PASSWORD_WITH_MORE_MAX_LENGHT_31;
         CreateUserContext createUserContext = new CreateUserContext();
@@ -207,7 +207,7 @@ public class AdminControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithPasswordNull() throws Exception {
+    void testCreateNewAccountWithPasswordNull() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput("test@email.com", null);
         String verifyPassword = "12345";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -227,7 +227,7 @@ public class AdminControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithPasswordWithSpacesOnly() throws Exception {
+    void testCreateNewAccountWithPasswordWithSpacesOnly() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput("test@email.com", "    ");
         String verifyPassword = "12345";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -247,7 +247,7 @@ public class AdminControllerTests {
     }
 
     @Test
-    public void testHelloUser() throws Exception {
+    void testHelloUser() throws Exception {
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/admin/helloAdmin")
                         .accept("application/json")

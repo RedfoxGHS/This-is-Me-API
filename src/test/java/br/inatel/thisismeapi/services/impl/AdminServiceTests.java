@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 @ContextConfiguration(classes = {AdminServiceImpl.class})
 @ActiveProfiles("dev")
 @ExtendWith(MockitoExtension.class)
-public class AdminServiceTests {
+class AdminServiceTests {
 
     @Autowired
     private AdminServiceImpl adminService;
@@ -45,7 +45,7 @@ public class AdminServiceTests {
     private CharacterRepository characterRepository;
 
     @Test
-    public void testCreateNewAccountSuccess() {
+    void testCreateNewAccountSuccess() {
 
         // given
         String email = "test@email.com";
@@ -71,7 +71,7 @@ public class AdminServiceTests {
     }
 
     @Test
-    public void testCreateNewAccountWithPasswordWithTheMaxNumberOfCharacters() {
+    void testCreateNewAccountWithPasswordWithTheMaxNumberOfCharacters() {
 
         String email = "test@email.com";
         String password = PasswordConst.PASSWORD_WITH_MORE_MAX_LENGHT_31;
@@ -85,7 +85,7 @@ public class AdminServiceTests {
     }
 
     @Test
-    public void testCreateNewAccountWithPasswordWithLessThanMinNumberOfCharacters() {
+    void testCreateNewAccountWithPasswordWithLessThanMinNumberOfCharacters() {
 
         // given
         String email = "test@email.com";

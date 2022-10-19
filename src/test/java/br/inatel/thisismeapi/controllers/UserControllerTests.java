@@ -50,7 +50,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(value = UserController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
 @ActiveProfiles("dev")
-public class UserControllerTests {
+class UserControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -68,7 +68,7 @@ public class UserControllerTests {
     private final static String ENDPOINT_USER_RESET = "/user/reset/";
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         mockMvc = webAppContextSetup(wac).addFilter(((request, response, chain) -> {
             response.setCharacterEncoding("UTF-8");
             chain.doFilter(request, response);
@@ -76,7 +76,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountSuccess() throws Exception {
+    void testCreateNewAccountSuccess() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput(EmailConst.EMAIL_MAX_LENGHT_255, "12345");
         String verifyPassword = "12345";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -98,7 +98,7 @@ public class UserControllerTests {
 
 
     @Test
-    public void testCreateNewAccountWithEmailInvalid() throws Exception {
+    void testCreateNewAccountWithEmailInvalid() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput("test@", "12345");
         String verifyPassword = "12345";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -118,7 +118,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithEmailNull() throws Exception {
+    void testCreateNewAccountWithEmailNull() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput(null, "12345");
         String verifyPassword = "12345";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -138,7 +138,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithEmailWithSpacesOnly() throws Exception {
+    void testCreateNewAccountWithEmailWithSpacesOnly() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput("    ", "12345");
         String verifyPassword = "12345";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -158,7 +158,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithEmailWithMoreMaxCharacter() throws Exception {
+    void testCreateNewAccountWithEmailWithMoreMaxCharacter() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput(EmailConst.EMAIL_WITH_MORE_MAX_LENGHT_256, "12345");
         String verifyPassword = "12345";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -178,7 +178,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithVerifyPasswordDifferent() throws Exception {
+    void testCreateNewAccountWithVerifyPasswordDifferent() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput("test@email.com", "12345");
         String verifyPassword = "123";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -198,7 +198,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithPasswordWithLessThanMinNumberOfCharacters() throws Exception {
+    void testCreateNewAccountWithPasswordWithLessThanMinNumberOfCharacters() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput("test@email.com", PasswordConst.PASSWORD_WITH_LESS_MIN_LENGHT_4);
         String verifyPassword = PasswordConst.PASSWORD_WITH_LESS_MIN_LENGHT_4;
         CreateUserContext createUserContext = new CreateUserContext();
@@ -218,7 +218,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithPasswordWithMoreThanMaxNumberOfCharacters() throws Exception {
+    void testCreateNewAccountWithPasswordWithMoreThanMaxNumberOfCharacters() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput("test@email.com", PasswordConst.PASSWORD_WITH_MORE_MAX_LENGHT_31);
         String verifyPassword = PasswordConst.PASSWORD_WITH_MORE_MAX_LENGHT_31;
         CreateUserContext createUserContext = new CreateUserContext();
@@ -239,7 +239,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithPasswordNull() throws Exception {
+    void testCreateNewAccountWithPasswordNull() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput("test@email.com", null);
         String verifyPassword = "12345";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -259,7 +259,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testCreateNewAccountWithPasswordWithSpacesOnly() throws Exception {
+    void testCreateNewAccountWithPasswordWithSpacesOnly() throws Exception {
         UserDtoInput userDtoInput = new UserDtoInput("test@email.com", "    ");
         String verifyPassword = "12345";
         CreateUserContext createUserContext = new CreateUserContext();
@@ -279,7 +279,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testHelloUser() throws Exception {
+    void testHelloUser() throws Exception {
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/user/helloUser")
                         .accept("application/json")
@@ -292,7 +292,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testForgotPasswordSendEmailSuccess() throws Exception {
+    void testForgotPasswordSendEmailSuccess() throws Exception {
         String email = "test@test.com";
         String responseExpected = "Código enviado para seu email: " + email;
 
@@ -308,7 +308,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testForgotPasswordSendEmailFail() throws Exception {
+    void testForgotPasswordSendEmailFail() throws Exception {
         String email = "testcom";
 
         doThrow(UnregisteredUserException.class).when(mailService).sendEmailForgotPassword(email);
@@ -323,7 +323,7 @@ public class UserControllerTests {
 
 
     @Test
-    public void testVerifyCodeResetSuccess() throws Exception {
+    void testVerifyCodeResetSuccess() throws Exception {
         VerifyResetContext verifyResetContext = new VerifyResetContext();
         verifyResetContext.setEmail("test@test.com");
         verifyResetContext.setNumber("123456");
@@ -341,7 +341,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testVerifyCodeResetThrowTokenInvalidException() throws Exception {
+    void testVerifyCodeResetThrowTokenInvalidException() throws Exception {
         VerifyResetContext verifyResetContext = new VerifyResetContext();
         verifyResetContext.setEmail("test@test.com");
         verifyResetContext.setNumber("123456");
@@ -359,7 +359,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testResetPassword() throws Exception {
+    void testResetPassword() throws Exception {
         ResetPasswordContext resetPasswordContext = new ResetPasswordContext();
         resetPasswordContext.setPassword("123456");
         resetPasswordContext.setPasswordVerify("123456");
@@ -380,7 +380,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void testResetPasswordWithoutTokenJWT() throws Exception {
+    void testResetPasswordWithoutTokenJWT() throws Exception {
         ResetPasswordContext resetPasswordContext = new ResetPasswordContext();
         resetPasswordContext.setPassword("123456");
         resetPasswordContext.setPasswordVerify("123456");

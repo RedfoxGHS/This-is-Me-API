@@ -10,11 +10,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = UserUtils.class)
 @ActiveProfiles("dev")
-public class UserUtilsTests {
+class UserUtilsTests {
 
 
     @Test
-    public void testVerifyPasswordSuccess(){
+    void testVerifyPasswordSuccess(){
         String pass1 = "123456";
         String pass2 = "123456";
 
@@ -22,7 +22,7 @@ public class UserUtilsTests {
     }
 
     @Test
-    public void testVerifyPasswordWhenIsNotEquals(){
+    void testVerifyPasswordWhenIsNotEquals(){
         String pass1 = "123456";
         String pass2 = "654321";
 
@@ -34,17 +34,17 @@ public class UserUtilsTests {
     }
 
     @Test
-    public void testVerifyEmailCantBeNull(){
+    void testVerifyEmailCantBeNull(){
         assertEquals("Email não pode ser nulo!", UserUtils.verifyEmail(null));
     }
 
     @Test
-    public void testVerifyEmailCantBeBlank(){
+    void testVerifyEmailCantBeBlank(){
         assertEquals("Email não pode ser deixado em branco!", UserUtils.verifyEmail(""));
     }
 
     @Test
-    public void testVerifyEmailSizeExceedingLimit(){
+    void testVerifyEmailSizeExceedingLimit(){
         String email = "abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij" +
                 "abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij" +
                 "abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij" +
@@ -53,12 +53,12 @@ public class UserUtilsTests {
     }
 
     @Test
-    public void testVerifyEmailFormatInvalid(){
+    void testVerifyEmailFormatInvalid(){
         assertEquals("Email inválido!", UserUtils.verifyEmail("email"));
     }
 
     @Test
-    public void testVerifyEmailWithValidEmail(){
+    void testVerifyEmailWithValidEmail(){
         assertNull(UserUtils.verifyEmail("email@test.com"));
     }
 

@@ -25,13 +25,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @EnableAutoConfiguration(exclude = {SecurityAutoConfiguration.class})
 @ActiveProfiles("dev")
-public class MongoExceptionHandlerTests {
+class MongoExceptionHandlerTests {
 
     @Mock
     HttpServletRequest httpServletRequest;
 
     @Test
-    public void testWriteErrorE11000() {
+    void testWriteErrorE11000() {
         WriteError writeError = new WriteError(11000, "code=11000, message=", new BsonDocument());
         MongoWriteException mongoWriteException = new MongoWriteException(writeError, new ServerAddress());
         MongoExceptionHandler mongoExceptionHandler = new MongoExceptionHandler();

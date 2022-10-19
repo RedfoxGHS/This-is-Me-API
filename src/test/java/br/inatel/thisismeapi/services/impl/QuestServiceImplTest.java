@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
 @ContextConfiguration(classes = {QuestServiceImpl.class})
 @ActiveProfiles("dev")
 @ExtendWith(MockitoExtension.class)
-public class QuestServiceImplTest {
+class QuestServiceImplTest {
 
     @Autowired
     private QuestServiceImpl questService;
@@ -48,7 +48,7 @@ public class QuestServiceImplTest {
     private CharacterRepository characterRepository;
 
     @Test
-    public void testCreateNewAccountSuccess() {
+    void testCreateNewAccountSuccess() {
 
         // given
         String email = "test@email.com";
@@ -71,7 +71,7 @@ public class QuestServiceImplTest {
     }
 
     @Test
-    public void testGetQuestTodaySuccess() {
+    void testGetQuestTodaySuccess() {
 
         // given
         String email = "test@email.com";
@@ -95,7 +95,7 @@ public class QuestServiceImplTest {
     }
 
     @Test
-    public void testGetQuestWeekSuccess() {
+    void testGetQuestWeekSuccess() {
 
         // given
         String email = "test@email.com";

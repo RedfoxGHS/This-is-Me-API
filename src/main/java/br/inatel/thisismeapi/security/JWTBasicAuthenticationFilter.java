@@ -30,13 +30,12 @@ public class JWTBasicAuthenticationFilter extends BasicAuthenticationFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JWTBasicAuthenticationFilter.class);
 
-    @Value("${private.key}")
-    private String PRIVATE_KEY;
+    @Value("${private.key.default}")
+    private String PRIVATE_KEY_DEFAULT;
 
     public JWTBasicAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
-
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -52,7 +51,7 @@ public class JWTBasicAuthenticationFilter extends BasicAuthenticationFilter {
 
         try {
             jwt = token.getValue();
-            DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(PRIVATE_KEY))
+            DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(this.PRIVATE_KEY_DEFAULT))
                     .build()
                     .verify(jwt);
             LOGGER.info("m=doFilterInternal, status=validated token");

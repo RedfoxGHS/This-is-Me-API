@@ -1,7 +1,7 @@
 package br.inatel.thisismeapi.security;
 
-import br.inatel.thisismeapi.entities.Roles;
-import br.inatel.thisismeapi.entities.dtos.UserDtoInput;
+import br.inatel.thisismeapi.controllers.dtos.requests.UserLoginRequestDTO;
+import br.inatel.thisismeapi.models.Roles;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,31 +27,29 @@ public class JWTUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JWTUsernamePasswordAuthenticationFilter.class);
 
-    @Value("${private.key}")
-    private String PRIVATE_KEY;
-
     private final AuthenticationManager authManager;
 
+    @Value("${private.key.default}")
+    private String PRIVATE_KEY_DEFAULT;
 
     public JWTUsernamePasswordAuthenticationFilter(AuthenticationManager authManager) {
         super();
         this.authManager = authManager;
         this.setFilterProcessesUrl("/user/login");
-
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         LOGGER.info("m=attemptAuthentication, status=trying authenticate");
-        UserDtoInput authRequest = null;
+        UserLoginRequestDTO authRequest = null;
         try {
             authRequest = new ObjectMapper()
-                    .readValue(request.getInputStream(), UserDtoInput.class);
+                    .readValue(request.getInputStream(), UserLoginRequestDTO.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        Authentication auth = new UsernamePasswordAuthenticationToken(authRequest.getEmail(),
+        Authentication auth = new UsernamePasswordAuthenticationToken(authRequest.getEmail().toLowerCase(),
                 authRequest.getPassword());
         LOGGER.info("m=attemptAuthentication, email={}", authRequest.getEmail());
 
@@ -77,7 +75,7 @@ public class JWTUsernamePasswordAuthenticationFilter extends UsernamePasswordAut
         String jwt = JWT.create()
                 .withClaim("email", email)
                 .withArrayClaim("auths", grant_auth)
-                .sign(Algorithm.HMAC256(PRIVATE_KEY));
+                .sign(Algorithm.HMAC256(this.PRIVATE_KEY_DEFAULT));
         Cookie cookie = new Cookie("token", jwt);
         cookie.setPath("/");
         cookie.setHttpOnly(true);

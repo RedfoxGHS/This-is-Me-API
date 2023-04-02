@@ -1,54 +1,79 @@
 package br.inatel.thisismeapi.entities;
 
-import br.inatel.thisismeapi.models.Day;
 import br.inatel.thisismeapi.enums.QuestStatus;
+import br.inatel.thisismeapi.models.Day;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-
+@Document
 public class Quest implements Serializable {
 
     @Id
     @Schema(hidden = true)
-    @Indexed(name = "quest_id", unique = true)
     private String questId;
 
+    @Schema(hidden = true)
     private String email;
 
+    @Schema(hidden = true)
     private QuestStatus status;
 
     private String hexColor;
 
+    @NotNull(message = "Nome da quest não pode ser nulo")
     private String name;
 
     private String desc;
 
-    private boolean isRepeatEveryDay;
-
-    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING)
+    @Schema(name = "startDate", description = "Data inicial da quest")
     private LocalDate startDate;
 
-    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING)
+    @Schema(name = "endDate", description = "Data final da quest")
     private LocalDate endDate;
 
-    // TODO criar entidade skill
-    private String skill;
+    @DBRef
+    private Skill skill;
 
     private List<Day> week;
 
+    @Schema(hidden = true)
+    private Long xpGained;
+
+    @Schema(hidden = true)
+    private Long totalXp;
+
+    @Schema(hidden = true)
+    private Long total;
+
+    @Schema(hidden = true)
+    private Long finalized;
+
     public Quest() {
+        this.week = new ArrayList<>();
+        this.total = 0L;
+        this.desc = "";
+        this.xpGained = 0L;
+        this.finalized = 0L;
+        this.skill = null;
     }
 
     public String getQuestId() {
         return questId;
+    }
+
+    public void setQuestId(String questId) {
+        this.questId = questId;
     }
 
     public String getEmail() {
@@ -91,14 +116,6 @@ public class Quest implements Serializable {
         this.desc = desc;
     }
 
-    public boolean isRepeatEveryDay() {
-        return isRepeatEveryDay;
-    }
-
-    public void setRepeatEveryDay(boolean repeatEveryDay) {
-        isRepeatEveryDay = repeatEveryDay;
-    }
-
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -115,11 +132,11 @@ public class Quest implements Serializable {
         this.endDate = endDate;
     }
 
-    public String getSkill() {
+    public Skill getSkill() {
         return skill;
     }
 
-    public void setSkill(String skill) {
+    public void setSkill(Skill skill) {
         this.skill = skill;
     }
 
@@ -135,10 +152,44 @@ public class Quest implements Serializable {
         this.week.add(day);
     }
 
-    public Day getDayByDayOfWeek(DayOfWeek dayOfWeek) {
-        Optional<Day> dayOptional = this.week.stream().filter(day -> day.getDayOfWeek() == dayOfWeek).findFirst();
-        if (dayOptional.isEmpty())
-            return null;
-        return dayOptional.get();
+    public Long getXpGained() {
+        return xpGained;
     }
+
+    public void addXpGained(Long xpGained) {
+        this.xpGained += xpGained;
+    }
+
+    public void removeXpGained(Long xpGained) {
+        this.xpGained -= xpGained;
+    }
+
+    public Long getTotalXp() {
+        return totalXp;
+    }
+
+    public void setTotalXp(Long totalXp) {
+        this.totalXp = totalXp;
+    }
+
+    public Long getTotal() {
+        return total;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
+    }
+
+    public Long getFinalized() {
+        return finalized;
+    }
+
+    public void addFinishedSubQuest() {
+        this.finalized++;
+    }
+
+    public void removeFinishedSubQuest() {
+        this.finalized--;
+    }
+
 }

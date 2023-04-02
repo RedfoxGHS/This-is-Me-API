@@ -3,9 +3,12 @@ package br.inatel.thisismeapi.entities;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,36 +18,53 @@ public class Character {
     @Id
     private String id;
 
-    private String sex;
+    @Indexed(name = "unique_email_character", unique = true)
+    private String email;
 
-    private Long clothes;
+    private Long numberClothes;
 
+    @NotNull(message = "Nome do personagem não pode ser nulo")
+    @NotBlank(message = "Nome do personagem não pode ser vazio")
     private String characterName;
 
     private Long xp;
 
-    private Long level;
-
     @DBRef
     private List<Quest> quests;
 
+    @DBRef
+    private List<Skill> skills;
+
     public Character() {
-        this.sex = "indefinido";
         this.xp = 0L;
-        this.level = 0L;
-        quests = new ArrayList<>();
+        this.numberClothes = 0L;
+        this.quests = new ArrayList<>();
+        this.skills = new ArrayList<>();
     }
 
-    public Character(String characterName) {
+    public Character(String email, String characterName) {
+        this.email = email;
         this.characterName = characterName;
+        this.numberClothes = 0L;
         this.xp = 0L;
-        this.level = 0L;
-        this.sex = "indefinido";
-        quests = new ArrayList<>();
+        this.quests = new ArrayList<>();
+        this.skills = new ArrayList<>();
+    }
+
+    public void setId(final String id) {
+        this.id = id;
     }
 
     public String getId() {
         return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getCharacterName() {
@@ -55,12 +75,12 @@ public class Character {
         this.characterName = characterName;
     }
 
-    public Long getClothes() {
-        return clothes;
+    public Long getNumberClothes() {
+        return numberClothes;
     }
 
-    public void setClothes(Long clothes) {
-        this.clothes = clothes;
+    public void setNumberClothes(Long numberClothes) {
+        this.numberClothes = numberClothes;
     }
 
     public Long getXp() {
@@ -72,19 +92,7 @@ public class Character {
     }
 
     public Long getLevel() {
-        return level;
-    }
-
-    public void upLevel() {
-        this.level++;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
+        return this.calculateLevel();
     }
 
     public List<Quest> getQuests() {
@@ -95,8 +103,24 @@ public class Character {
         this.quests = quests;
     }
 
+    public List<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
+    }
+
+    private Long calculateLevel() {
+        return (long) Math.floor(Math.sqrt(this.xp));
+    }
+
     public String toStringJson() {
         Gson gson = new GsonBuilder().serializeNulls().create();
         return gson.toJson(this);
+    }
+
+    public void removeXp(Long xp) {
+        this.xp -= xp;
     }
 }

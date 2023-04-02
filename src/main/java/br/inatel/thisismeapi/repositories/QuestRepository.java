@@ -4,31 +4,28 @@ import br.inatel.thisismeapi.entities.Quest;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface QuestRepository extends MongoRepository<Quest, String> {
 
+    @Aggregation(pipeline = {
+            "{'$match': {" +
+                    "'email': ?0, " +
+                    "'startDate': {$lte: ?1}, " +
+                    "'endDate': {$gte: ?1}" +
+                    "}}"
+    })
+    List<Quest> findAllQuestsByDate(String email, LocalDate day);
+
+    void deleteAllQuestsByEmail(String email);
 
     @Aggregation(pipeline = {
-            "{'$match': {$and: [" +
-                    "{'email': ?0}, " +
-                    "{'startDate': " +
-                    "{$lte: ?1}}, " +
-                    "{'endDate': {$gte: ?1}}, " +
-                    "{'week': {$elemMatch: {'dayOfWeek': ?2}}}]}}"
+            "{'$match': {" +
+                    "'_id': ?0, " +
+                    "'email': ?1, " +
+                    "}}"
     })
-    List<Quest> findAllQuestsOfTheDay(String email, LocalDate day, DayOfWeek dayOfWeek);
-
-    @Aggregation(pipeline = {
-            "{'$match': {$and: [" +
-                    "{'email': ?0}, " +
-                    "{'startDate': " +
-                    "{$lte: ?1}}, " +
-                    "{'endDate': {$gte: ?1}}" +
-                    "]}}"
-    })
-    List<Quest> findAllQuestsWeek(String email, LocalDate day);
-
+    Optional<Quest> findQuestByIdAndEmail(String id, String email);
 }

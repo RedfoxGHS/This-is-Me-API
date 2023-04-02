@@ -25,10 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         LOGGER.info("m=loadUserByUsername, username={}", username);
 
-        String validEmail = UserUtils.verifyEmail(username);
-        if (validEmail != null) {
-            throw new RuntimeException(validEmail);
-        }
+        UserUtils.verifyEmail(username);
 
         Optional<User> opUser = userRepository.findByEmail(username);
 

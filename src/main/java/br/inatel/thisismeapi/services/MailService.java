@@ -2,7 +2,5 @@ package br.inatel.thisismeapi.services;
 
 public interface MailService {
 
-    void sendEmailForgotPassword(String email);
-
-    String verifyNumberPassword(String email, String number);
+    void sendEmailWithMessage(String email, String subject, String message);
 }

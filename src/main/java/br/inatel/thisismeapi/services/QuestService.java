@@ -8,9 +8,9 @@ public interface QuestService {
 
     Quest createNewQuest(Quest quest, String email);
 
-    List<Quest> getAllQuest(String email);
-
     List<Quest> getQuestToday(String email);
 
-    List<Quest> getQuestWeek(String email);
+    Quest getQuestById(String id, String email);
+
+    void updateQuest(Quest quest, String email);
 }

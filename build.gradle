@@ -25,6 +25,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.11'
+	implementation 'org.springdoc:springdoc-openapi-webflux-ui:1.6.12'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
 	implementation 'org.springframework.boot:spring-boot-devtools:2.7.3'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
@@ -38,12 +39,36 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail:2.7.3'
 
+	// https://mvnrepository.com/artifact/com.intuit.karate/karate-core
+	implementation 'com.intuit.karate:karate-core:1.3.0.RC2'
 
-	// https://mvnrepository.com/artifact/io.rest-assured/spring-mock-mvc
-	testImplementation 'io.rest-assured:spring-mock-mvc:5.2.0'
+
+	// https://mvnrepository.com/artifact/io.cucumber/cucumber-java
+	implementation 'io.cucumber:cucumber-java:7.9.0'
+
+	// https://mvnrepository.com/artifact/io.rest-assured/rest-assured
+	testImplementation 'io.rest-assured:rest-assured:5.3.0'
+	// https://mvnrepository.com/artifact/org.hamcrest/hamcrest
+	testImplementation 'org.hamcrest:hamcrest:2.2'
+
+
+
+
+//	// https://mvnrepository.com/artifact/io.rest-assured/spring-mock-mvc
+//	testImplementation 'io.rest-assured:spring-mock-mvc:5.2.0'
+	// https://mvnrepository.com/artifact/io.rest-assured/rest-assured
+	testImplementation 'io.rest-assured:rest-assured:4.5.1'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
 	testImplementation 'org.springframework.security:spring-security-test:5.7.3'
+	// https://mvnrepository.com/artifact/org.mockito/mockito-inline
+	testImplementation 'org.mockito:mockito-inline:4.8.1'
+
+	// https://mvnrepository.com/artifact/com.intuit.karate/karate-apache
+	testImplementation 'com.intuit.karate:karate-apache:0.9.6'
+	// https://mvnrepository.com/artifact/com.intuit.karate/karate-junit4
+	testImplementation 'com.intuit.karate:karate-junit4:1.3.0.RC2'
+    testImplementation 'org.testng:testng:7.1.0'
 
 }
 
@@ -72,10 +97,17 @@ jacocoTestReport{
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it, exclude: [
-					"br/inatel/thisismeapi/TimeApplication.class",
-					"br/inatel/thisismeapi/config/ValidationConfig.class",
-					"br/inatel/thisismeapi/security/**",
-					"br/inatel/thisismeapi/models/Card.class"
+					"**/thisismeapi/TimeApplication**",
+					"**/thisismeapi/entities/**",
+					"**/thisismeapi/config/**",
+					"**/thisismeapi/models/Roles**",
+					"**/thisismeapi/controllers/dtos/**",
+					"**/thisismeapi/controllers/GlobalControllerExceptions**",
+					"**/thisismeapi/controllers/AdminController**",
+					"**/thisismeapi/security/**",
+					"**/thisismeapi/services/impl/AdminServiceImpl**",
+					"**/thisismeapi/exceptions/**",
+					"**/thisismeapi/repositories/**"
 			])
 		}))
 	}
@@ -87,10 +119,17 @@ jacocoTestCoverageVerification {
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it, exclude: [
-					"br/inatel/thisismeapi/TimeApplication.class",
-					"br/inatel/thisismeapi/config/ValidationConfig.class",
-					"br/inatel/thisismeapi/security/**",
-					"br/inatel/thisismeapi/models/Card.class"
+					"**/thisismeapi/TimeApplication**",
+					"**/thisismeapi/entities/**",
+					"**/thisismeapi/config/**",
+					"**/thisismeapi/models/Roles**",
+					"**/thisismeapi/controllers/dtos/**",
+					"**/thisismeapi/controllers/GlobalControllerExceptions**",
+					"**/thisismeapi/controllers/AdminController**",
+					"**/thisismeapi/security/**",
+					"**/thisismeapi/services/impl/AdminServiceImpl**",
+					"**/thisismeapi/exceptions/**",
+					"**/thisismeapi/repositories/**"
 			])
 		}))
 	}
@@ -98,7 +137,7 @@ jacocoTestCoverageVerification {
 		rule {
 			enabled = true
 			limit {
-				minimum = 0.6
+				minimum = 0.8
 			}
 		}
 	}

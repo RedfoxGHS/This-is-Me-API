@@ -1,13 +1,22 @@
 package br.inatel.thisismeapi.services;
 
-import br.inatel.thisismeapi.entities.Character;
 import br.inatel.thisismeapi.entities.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public interface UserService {
 
-    User createNewAccount(User user, Character character);
+    String saveNewAccount(String email, String password, String verifyPassword, String characterName);
 
-    Character findCharacterByEmail(String email);
+    User updateUser(User user);
 
-    void resetPassword(String password, String jwt);
+    User findUserByEmail(String email);
+
+    void sendEmailToResetPassword(String email);
+
+    String getResetTokenWithEmailAndNumber(String email, Integer number);
+
+    public void resetPassword(String password, String passwordVerify, String resetToken);
+
+    BCryptPasswordEncoder passwordEncoder();
+
 }

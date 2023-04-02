@@ -1,6 +1,6 @@
 package br.inatel.thisismeapi.entities;
 
-import br.inatel.thisismeapi.controllers.exceptions.ConstraintViolationException;
+import br.inatel.thisismeapi.models.Roles;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -22,7 +22,7 @@ public class User {
     @NotNull()
     @NotBlank()
     @Email(regexp = ".+[@].+[\\\\.].+")
-    @Size(max = 255)
+    @Size(max = 120)
     private String email;
 
     @NotNull()
@@ -41,8 +41,8 @@ public class User {
     }
 
     public User(String email, String password) {
-        setEmail(email);
-        setPassword(password);
+        this.email = email;
+        this.password = password;
     }
 
     public String getId() {
@@ -54,14 +54,6 @@ public class User {
     }
 
     public void setEmail(String email) {
-        if (email == null)
-            throw new ConstraintViolationException("Email não pode ser nulo!");
-        if (email.isBlank())
-            throw new ConstraintViolationException("Email não pode ser deixado em branco!");
-        if (email.length() > 255)
-            throw new ConstraintViolationException("Email não pode ser ter mais de 255 digitos!");
-        if (!email.matches(".+[@].+[\\\\.].+"))
-            throw new ConstraintViolationException("Email inválido!");
 
         this.email = email;
     }
@@ -71,17 +63,8 @@ public class User {
     }
 
     public void setPassword(String password) {
-        if (password == null)
-            throw new ConstraintViolationException("Senha não pode ser nula!");
-        if (password.isBlank())
-            throw new ConstraintViolationException("Senha não pode ser deixada em branco!");
 
         this.password = password;
-    }
-
-    public void verifyPassword(String verifyPassword) {
-        if (!password.equals(verifyPassword))
-            throw new ConstraintViolationException("As Senhas não coincidem!");
     }
 
     public Character getCharacter() {
